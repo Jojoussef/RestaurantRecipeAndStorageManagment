@@ -8,45 +8,75 @@ public class RangementDAO extends DAO<Rangement> {
     }
 
     @Override
-    public void create(Rangement rangement) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO rangement (refRangement, nomRangement) VALUES (?, ?)");
-        statement.setInt(1, rangement.getRefRangement());
-        statement.setString(2, rangement.getNomRangement());
-        statement.executeUpdate();
-    }
-
-    @Override
-    public void delete(Rangement rangement) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM rangement WHERE refRangement = ?");
-        statement.setInt(1, rangement.getRefRangement());
-        statement.executeUpdate();
-    }
-
-    @Override
-    public void update(Rangement rangement) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE rangement SET nomRangement = ? WHERE refRangement = ?");
-        statement.setString(1, rangement.getNomRangement());
-        statement.setInt(2, rangement.getRefRangement());
-        statement.executeUpdate();
-    }
-
-    @Override
-    public ArrayList<Rangement> findAll() throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement");
-        ArrayList<Rangement> rangements = new ArrayList<>();
-        while (resultSet.next()) {
-            Rangement rangement = new Rangement();
-            rangement.setRefRangement(resultSet.getInt("refRangement"));
-            rangement.setNomRangement(resultSet.getString("nomRangement"));
-            rangements.add(rangement);
+    public boolean create(Rangement rangement) {
+        try{
+            if (find(rangement.getRefRangement()) != null) {
+                return false;
+            }
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO rangement (refRangement, nomRangement) VALUES (?, ?)");
+            statement.setInt(1, rangement.getRefRangement());
+            statement.setString(2, rangement.getNomRangement());
+            statement.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
         }
-        return rangements;
+        return true;
     }
 
     @Override
-    public Rangement find(int id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM rangement WHERE refRangement = ?");
+    public boolean delete(Rangement rangement)  {
+        try{
+            if (find(rangement.getRefRangement()) == null) {
+                return false;}
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM rangement WHERE refRangement = ?");
+            statement.setInt(1, rangement.getRefRangement());
+            statement.executeUpdate();
+        }catch(SQLException e){ e.printStackTrace();
+            return false;
+        }      
+        return true;
+    }
+
+    @Override
+    public boolean update(Rangement rangement)  {
+        try{
+            if (find(rangement.getRefRangement()) == null) {
+                return false;
+            }
+            PreparedStatement statement = conn.prepareStatement("UPDATE rangement SET nomRangement = ? WHERE refRangement = ?");
+            statement.setString(1, rangement.getNomRangement());
+            statement.setInt(2, rangement.getRefRangement());
+            statement.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        } 
+        return true;
+    }
+
+    @Override
+    public ArrayList<Rangement> findAll()  {
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement");
+            ArrayList<Rangement> rangements = new ArrayList<>();
+            while (resultSet.next()) {
+                Rangement rangement = new Rangement();
+                rangement.setRefRangement(resultSet.getInt("refRangement"));
+                rangement.setNomRangement(resultSet.getString("nomRangement"));
+                rangements.add(rangement);
+            }
+            return rangements;
+        }catch(SQLException e){ e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Rangement find(int id) {
+        try{
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM rangement WHERE refRangement = ?");
         statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
         Rangement rangement = null;
@@ -56,5 +86,8 @@ public class RangementDAO extends DAO<Rangement> {
             rangement.setNomRangement(resultSet.getString("nomRangement"));
         }
         return rangement;
+        }catch(SQLException e){ e.printStackTrace();
+            return null;
+        }
     }
 }

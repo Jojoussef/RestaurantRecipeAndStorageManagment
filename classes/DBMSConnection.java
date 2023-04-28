@@ -11,7 +11,7 @@ public class DBMSConnection{
             Class.forName(driver);
         Connection connection;
         connection = DriverManager.getConnection(url, user, password);
-        System.out.println("Connexion effective !");
+        System.out.println("Connexion effective !"); 
         connection.close();
         }catch(Exception e){
             System.out.println(e.getMessage());
