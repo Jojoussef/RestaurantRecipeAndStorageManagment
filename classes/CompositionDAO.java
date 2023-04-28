@@ -4,21 +4,13 @@ import java.util.List;
 
 public class CompositionDAO extends DAO<Composition> {
 
-    private static final String INSERT_QUERY = "INSERT INTO composition (refComposition, quantiteComposition, refRecette, refIngredient) VALUES (?, ?, ?, ?)";
-    private static final String DELETE_QUERY = "DELETE FROM composition WHERE refComposition = ?";
-    private static final String UPDATE_QUERY = "UPDATE composition SET quantiteComposition = ?, refRecette = ?, refIngredient = ? WHERE refComposition = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM composition";
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM composition WHERE refComposition = ?";
-
-    private Connection connection;
-
     public CompositionDAO(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
     @Override
-    public void insert(Composition composition) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+    public void create(Composition composition) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO composition (refComposition, quantiteComposition, refRecette, refIngredient) VALUES (?, ?, ?, ?)");
         statement.setInt(1, composition.getRefComposition());
         statement.setDouble(2, composition.getQuantiteComposition());
         statement.setInt(3, composition.getRefRecette());
@@ -28,14 +20,14 @@ public class CompositionDAO extends DAO<Composition> {
 
     @Override
     public void delete(Composition composition) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+        PreparedStatement statement = connection.prepareStatement( "DELETE FROM composition WHERE refComposition = ?");
         statement.setInt(1, composition.getRefComposition());
         statement.executeUpdate();
     }
 
     @Override
     public void update(Composition composition) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+        PreparedStatement statement = connection.prepareStatement("UPDATE composition SET quantiteComposition = ?, refRecette = ?, refIngredient = ? WHERE refComposition = ?");
         statement.setDouble(1, composition.getQuantiteComposition());
         statement.setInt(2, composition.getRefRecette());
         statement.setInt(3, composition.getRefIngredient());
@@ -44,10 +36,10 @@ public class CompositionDAO extends DAO<Composition> {
     }
 
     @Override
-    public List<Composition> findAll() throws SQLException {
+    public ArrayList<Composition> findAll() throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(FIND_ALL_QUERY);
-        List<Composition> compositions = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery( "SELECT * FROM composition");
+        ArrayList<Composition> compositions = new ArrayList<>();
         while (resultSet.next()) {
             Composition composition = new Composition();
             composition.setRefComposition(resultSet.getInt("refComposition"));
