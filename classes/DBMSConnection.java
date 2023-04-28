@@ -11,12 +11,8 @@ public class DBMSConnection{
             Class.forName(driver);
         Connection connection;
         connection = DriverManager.getConnection(url, user, password);
-        Statement s1= connection.createStatement();
-        ResultSet res= s1.executeQuery("SELECT * FROM RANGEMENT;");
-        System.out.println("connection established");
-        s1.close();
+        System.out.println("Connexion effective !");
         connection.close();
-        
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
