@@ -1,62 +1,78 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CompositionDAO extends DAO<Composition> {
+
+    private static final String INSERT_QUERY = "INSERT INTO composition (refComposition, quantiteComposition, refRecette, refIngredient) VALUES (?, ?, ?, ?)";
+    private static final String DELETE_QUERY = "DELETE FROM composition WHERE refComposition = ?";
+    private static final String UPDATE_QUERY = "UPDATE composition SET quantiteComposition = ?, refRecette = ?, refIngredient = ? WHERE refComposition = ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM composition";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM composition WHERE refComposition = ?";
+
+    private Connection connection;
+
     public CompositionDAO(Connection connection) {
-        super(connection);
+        this.connection = connection;
     }
 
+    @Override
     public void insert(Composition composition) throws SQLException {
-        String query = "INSERT INTO composition (recette_id, produit_id, quantite) VALUES (?, ?, ?)";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, composition.getRecetteId());
-            statement.setInt(2, composition.getProduitId());
-            statement.setInt(3, composition.getQuantite());
-            statement.executeUpdate();
-        }
+        PreparedStatement statement = connection.prepareStatement(INSERT_QUERY);
+        statement.setInt(1, composition.getRefComposition());
+        statement.setDouble(2, composition.getQuantiteComposition());
+        statement.setInt(3, composition.getRefRecette());
+        statement.setInt(4, composition.getRefIngredient());
+        statement.executeUpdate();
     }
-  
-    public ArratList<Composition> findAll() throws SQLException {
-        String query = "SELECT * FROM composition";
-        ArratList<Composition> compositions = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                int recetteId = resultSet.getInt("recette_id");
-                int produitId = resultSet.getInt("produit_id");
-                int quantite = resultSet.getInt("quantite");
-                compositions.add(new Composition(id, recetteId, produitId, quantite));
-            }
+    @Override
+    public void delete(Composition composition) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+        statement.setInt(1, composition.getRefComposition());
+        statement.executeUpdate();
+    }
+
+    @Override
+    public void update(Composition composition) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+        statement.setDouble(1, composition.getQuantiteComposition());
+        statement.setInt(2, composition.getRefRecette());
+        statement.setInt(3, composition.getRefIngredient());
+        statement.setInt(4, composition.getRefComposition());
+        statement.executeUpdate();
+    }
+
+    @Override
+    public List<Composition> findAll() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(FIND_ALL_QUERY);
+        List<Composition> compositions = new ArrayList<>();
+        while (resultSet.next()) {
+            Composition composition = new Composition();
+            composition.setRefComposition(resultSet.getInt("refComposition"));
+            composition.setQuantiteComposition(resultSet.getDouble("quantiteComposition"));
+            composition.setRefRecette(resultSet.getInt("refRecette"));
+            composition.setRefIngredient(resultSet.getInt("refIngredient"));
+            compositions.add(composition);
         }
-
         return compositions;
     }
 
-    public void update(Composition composition) throws SQLException {
-        String query = "UPDATE composition SET recette_id = ?, produit_id = ?, quantite = ? WHERE id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, composition.getRecetteId());
-            statement.setInt(2, composition.getProduitId());
-            statement.setInt(3, composition.getQuantite());
-            statement.setInt(4, composition.getId());
-            statement.executeUpdate();
+    @Override
+    public Composition find(int id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        Composition composition = null;
+        if (resultSet.next()) {
+            composition = new Composition();
+            composition.setRefComposition(resultSet.getInt("refComposition"));
+            composition.setQuantiteComposition(resultSet.getDouble("quantiteComposition"));
+            composition.setRefRecette(resultSet.getInt("refRecette"));
+            composition.setRefIngredient(resultSet.getInt("refIngredient"));
         }
-    }
-
-    public void delete(int id) throws SQLException {
-        String query = "DELETE FROM composition WHERE id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        }
+        return composition;
     }
 }
+
