@@ -25,12 +25,10 @@ public class RangementDAO extends DAO<Rangement> {
     }
 
     @Override
-    public boolean delete(Rangement rangement)  {
+    public boolean delete(int id)  {
         try{
-            if (find(rangement.getRefRangement()) == null) {
-                return false;}
             PreparedStatement statement = conn.prepareStatement("DELETE FROM rangement WHERE refRangement = ?");
-            statement.setInt(1, rangement.getRefRangement());
+            statement.setInt(1, id);
             statement.executeUpdate();
         }catch(SQLException e){ e.printStackTrace();
             return false;

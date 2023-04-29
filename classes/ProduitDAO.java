@@ -92,10 +92,10 @@ public class ProduitDAO extends DAO<Produit> {
     }
 
     @Override
-    public boolean delete(Produit o) {
+    public boolean delete(int id) {
         try {
             PreparedStatement stat = conn.prepareStatement("DELETE FROM PRODUIT WHERE RefProduit=?");
-            stat.setInt(1, o.getRefProduit());
+            stat.setInt(1, id);
             int res = stat.executeUpdate();
             stat.close();
             return res==1;

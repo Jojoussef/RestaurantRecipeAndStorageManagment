@@ -28,13 +28,11 @@ public class CompositionDAO extends DAO<Composition> {
     }
 
     @Override
-    public boolean delete(Composition composition) {
+    public boolean delete(int id) {
         try{
-            if (find(composition.getRefComposition()) == null) {
-                return false;
-            }
+            
             PreparedStatement statement = conn.prepareStatement( "DELETE FROM composition WHERE refComposition = ?");
-            statement.setInt(1, composition.getRefComposition());
+            statement.setInt(1, id);
             statement.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();

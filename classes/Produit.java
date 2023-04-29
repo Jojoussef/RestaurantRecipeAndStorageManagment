@@ -3,10 +3,10 @@ class Produit{
     private String DescriptifProduit;
     private String DatePeremption;
     private int QuantiteProduit;
-    private double PrixProduit;
+    private int PrixProduit;
     private int RefReangement;
     private int RefIngredient;
-    public Produit(int RefProduit, String DescriptifProduit, String DatePeremption, int QuantiteProduit, double PrixProduit, int RefReangement, int RefIngredient){
+    public Produit(int RefProduit, String DescriptifProduit, String DatePeremption, int QuantiteProduit, int PrixProduit, int RefReangement, int RefIngredient){
         this.RefProduit = RefProduit;
         this.DescriptifProduit = DescriptifProduit;
         this.DatePeremption = DatePeremption;
@@ -48,10 +48,10 @@ class Produit{
     public void setQuantiteProduit(int QuantiteProduit){
         this.QuantiteProduit = QuantiteProduit;
     }
-    public double getPrixProduit(){
+    public int getPrixProduit(){
         return PrixProduit;
     }
-    public void setPrixProduit(double PrixProduit){
+    public void setPrixProduit(int PrixProduit){
         this.PrixProduit = PrixProduit;
     }
     public int getRefReangement(){

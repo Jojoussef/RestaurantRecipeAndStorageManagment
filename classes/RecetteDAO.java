@@ -88,10 +88,10 @@ public class RecetteDAO extends DAO<Recette>{
     }
 
     @Override
-    public boolean delete(Recette o) {
+    public boolean delete(int id) {
         try{
             PreparedStatement stat= conn.prepareStatement("DELETE FROM RECETTE WHERE refRecette=?");
-            stat.setInt(1, o.getRefRecette());
+            stat.setInt(1, id);
             stat.executeUpdate();
             return true;
         }catch(SQLException e){
