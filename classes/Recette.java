@@ -8,6 +8,17 @@ public class Recette {
     private int tempsCuisson;
     private int nbPersonnes;
     
+    public Recette(int refRecette, String nomRecette, String descriptifRecette, int calorieRecette, int difficulte, int tempsPreparation, int tempsCuisson, int nbPersonnes) {
+        this.refRecette = refRecette;
+        this.nomRecette = nomRecette;
+        this.descriptifRecette = descriptifRecette;
+        this.calorieRecette = calorieRecette;
+        this.difficulte = difficulte;
+        this.tempsPreparation = tempsPreparation;
+        this.tempsCuisson = tempsCuisson;
+        this.nbPersonnes = nbPersonnes;
+    }
+
     public int getRefRecette() {
         return refRecette;
     }
