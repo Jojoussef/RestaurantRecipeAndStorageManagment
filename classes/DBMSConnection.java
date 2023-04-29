@@ -5,18 +5,26 @@ public class DBMSConnection{
     private static String driver= "oracle.jdbc.driver.OracleDriver";
     private static String user = "system";
     private static String password = "Azer2014";
-
-    public static void main(String args[]){
+    private static Connection connection;
+    public DBMSConnection(){
         try {
             Class.forName(driver);
-        Connection connection;
         connection = DriverManager.getConnection(url, user, password);
         System.out.println("Connexion effective !"); 
-        connection.close();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-        
     }
-        
+
+    public Connection getConnection(){
+        return connection;   
+    }
+
+    public void closeConnection(){
+        try{
+            connection.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }   
 }
