@@ -3,6 +3,16 @@ public class Ingredient {
     private String nomIngredient;
     private int refType;
     
+    public Ingredient(int refIngredient, String nomIngredient, int refType) {
+        this.refIngredient = refIngredient;
+        this.nomIngredient = nomIngredient;
+        this.refType = refType;
+    }
+    
+    public Ingredient() {
+        
+    }
+    
     public int getRefIngredient() {
         return refIngredient;
     }

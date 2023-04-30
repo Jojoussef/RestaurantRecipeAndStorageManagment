@@ -31,6 +31,32 @@ public class ProduitDAO extends DAO<Produit> {
         }
         return arrProduit;
     }
+
+    public ArrayList<Produit> findAll(String champ, String nomChamp){
+        ArrayList<Produit> arrProduit = new ArrayList<>();
+        Produit prod= new Produit();
+        
+        
+        try {
+            Statement stat= conn.createStatement();
+            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT"+nomChamp+champ);
+            while (res.next()) {                
+                prod.setDatePeremption(res.getString("DatePeremption"));
+                prod.setDescriptifProduit(res.getString("DescriptifProduit"));
+                prod.setPrixProduit(Integer.parseInt(res.getString("PrixProduit")));
+                prod.setQuantiteProduit(Integer.parseInt(res.getString("QuantiteProduit")));
+                prod.setRefIngredient(Integer.parseInt(res.getString("RefIngredient")));
+                prod.setRefProduit(Integer.parseInt(res.getString("RefProduit")));
+                prod.setRefReangement(Integer.parseInt(res.getString("RefReangement")));
+                arrProduit.add(prod);
+            }
+            stat.close();
+        } catch (NumberFormatException | SQLException e) {
+            Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return arrProduit;
+    }
+
     public Produit find(int id){
         Produit prod= new Produit();
         try {

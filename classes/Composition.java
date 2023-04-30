@@ -4,6 +4,16 @@ public class Composition {
     private int refRecette;
     private int refIngredient;
     
+    public Composition() {
+        }
+        
+    public Composition(int refComposition, double quantiteComposition, int refRecette, int refIngredient) {
+        this.refComposition = refComposition;
+        this.quantiteComposition = quantiteComposition;
+        this.refRecette = refRecette;
+        this.refIngredient = refIngredient;
+    }
+    
     public int getRefComposition() {
         return refComposition;
     }

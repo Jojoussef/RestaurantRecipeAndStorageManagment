@@ -27,6 +27,23 @@ public class RecetteDAO extends DAO<Recette>{
         }
         return null;
     }
+    @Override
+    public ArrayList<Recette> findAll(String champ, String nomChamp) {
+        try{
+            PreparedStatement stat= conn.prepareStatement("SELECT * FROM RECETTE WHERE "+nomChamp+champ);
+            ResultSet res = stat.executeQuery();
+            ArrayList<Recette> recettes = new ArrayList<Recette>();
+            while(res.next()){
+                Recette recette = new Recette(res.getInt("refRecette"), res.getString("nomRecette"), res.getString("descriptionRecette"), res.getInt("calorieRecette"),res.getInt("difficulte"),res.getInt("tempsPreparation"),
+                 res.getInt("tempsCuisson"), res.getInt("nbPersonnes"));
+                recettes.add(recette);
+                return recettes;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public Recette find(int id) {

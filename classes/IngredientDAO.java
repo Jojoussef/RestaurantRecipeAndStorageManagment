@@ -72,7 +72,7 @@ public class IngredientDAO extends DAO<Ingredient> {
         
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT;");
+            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT");
             while (res.next()) {                
                 ing.setNomIngredient(res.getString("NomIngredient"));
                 ing.setRefType(Integer.parseInt(res.getString("QuantiteProduit")));
@@ -87,6 +87,30 @@ public class IngredientDAO extends DAO<Ingredient> {
         return null;
         
     }
+
+    public ArrayList<Ingredient> findAll(String champ, String nomChamp){
+        ArrayList<Ingredient> arrIngredient = new ArrayList<>();
+        Ingredient ing= new Ingredient();
+        
+        
+        try {
+            Statement stat= conn.createStatement();
+            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT"+nomChamp+champ);
+            while (res.next()) {                
+                ing.setNomIngredient(res.getString("NomIngredient"));
+                ing.setRefType(Integer.parseInt(res.getString("QuantiteProduit")));
+                ing.setRefIngredient(Integer.parseInt(res.getString("RefIngredient")));
+                arrIngredient.add(ing);
+            }
+            stat.close();
+            return arrIngredient;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+        
+    }
+
     public Ingredient find(int id){
         Ingredient ing= new Ingredient();
         try {

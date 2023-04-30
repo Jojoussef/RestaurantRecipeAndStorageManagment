@@ -2,6 +2,16 @@ public class TypeIngredient {
     private int refType;
     private String nomType;
     
+    public TypeIngredient(int refType, String nomType) {
+        this.refType = refType;
+        this.nomType = nomType;
+    }
+    
+    public TypeIngredient() {
+    
+    }
+
+    
     public int getRefType() {
         return refType;
     }

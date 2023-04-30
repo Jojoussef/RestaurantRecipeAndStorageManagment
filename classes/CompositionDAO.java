@@ -81,6 +81,25 @@ public class CompositionDAO extends DAO<Composition> {
         }
         return compositions;
     }
+    public ArrayList<Composition> findAll(String champ, String nomChamp)  {
+        ArrayList<Composition> compositions = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery( "SELECT * FROM composition"+nomChamp+champ);
+            while (resultSet.next()) {
+                Composition composition = new Composition();
+                composition.setRefComposition(resultSet.getInt("refComposition"));
+                composition.setQuantiteComposition(resultSet.getDouble("quantiteComposition"));
+                composition.setRefRecette(resultSet.getInt("refRecette"));
+                composition.setRefIngredient(resultSet.getInt("refIngredient"));
+                compositions.add(composition);
+        }
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        return compositions;
+    }
 
     @Override
     public Composition find(int id)  {

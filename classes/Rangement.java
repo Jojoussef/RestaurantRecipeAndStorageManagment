@@ -2,6 +2,16 @@ public class Rangement {
     private int refRangement;
     private String nomRangement;
     
+    public Rangement(int refRangement, String nomRangement) {
+        this.refRangement = refRangement;
+        this.nomRangement = nomRangement;
+    }
+    
+    public Rangement() {
+        
+    }
+    
+    
     public int getRefRangement() {
         return refRangement;
     }
