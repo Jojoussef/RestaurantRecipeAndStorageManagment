@@ -3,17 +3,22 @@ import java.sql.*;
 public class DBMSConnection{
     private static String url="jdbc:oracle:thin:@localhost:1521:xe";
     private static String driver= "oracle.jdbc.driver.OracleDriver";
-    private static String user = "system";
-    private static String password = "Azer2014";
+    private static String user = "c##TPjava";
+    private static String password = "system";
     private static Connection connection;
+    private boolean status;
     public DBMSConnection(){
         try {
             Class.forName(driver);
         connection = DriverManager.getConnection(url, user, password);
-        System.out.println("Connexion effective !"); 
+        status=true;
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            status=false;
         }
+    }
+
+    public boolean getState(){
+        return status;
     }
 
     public Connection getConnection(){
