@@ -39,7 +39,7 @@ public class ProduitDAO extends DAO<Produit> {
         
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT"+nomChamp+champ);
+            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT"+nomChamp+champ+";");
             while (res.next()) {                
                 prod.setDatePeremption(res.getString("DatePeremption"));
                 prod.setDescriptifProduit(res.getString("DescriptifProduit"));
@@ -61,7 +61,7 @@ public class ProduitDAO extends DAO<Produit> {
         Produit prod= new Produit();
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT");            
+            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT;");            
                 prod.setDatePeremption(res.getString("DatePeremption"));
                 prod.setDescriptifProduit(res.getString("DescriptifProduit"));
                 prod.setPrixProduit(Integer.parseInt(res.getString("PrixProduit")));
@@ -79,7 +79,7 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean create(Produit o){
         try {
-            PreparedStatement stat = this.conn.prepareStatement("INSERT INTO Produit (RefProduit, DescriptifProduit, DatePeremption, QuantiteProduit, PrixProduit, RefReangement, RefIngredient) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stat = this.conn.prepareStatement("INSERT INTO Produit (RefProduit, DescriptifProduit, DatePeremption, QuantiteProduit, PrixProduit, RefReangement, RefIngredient) VALUES (?, ?, ?, ?, ?, ?, ?);");
             stat.setInt(1, o.getRefProduit());
             stat.setString(2, o.getDescriptifProduit());
             stat.setString(3, o.getDatePeremption());
@@ -100,7 +100,7 @@ public class ProduitDAO extends DAO<Produit> {
     public boolean update(Produit o) {
          try {
             PreparedStatement stat = this.conn.prepareStatement(
-                "UPDATE Produit SET DescriptifProduit = ?, DatePeremption = ?, QuantiteProduit = ?, PrixProduit = ?, RefReangement = ?, RefIngredient = ? WHERE RefProduit = ?"
+                "UPDATE Produit SET DescriptifProduit = ?, DatePeremption = ?, QuantiteProduit = ?, PrixProduit = ?, RefReangement = ?, RefIngredient = ? WHERE RefProduit = ?;"
             );
             stat.setString(1, o.getDescriptifProduit());
             stat.setString(2, o.getDatePeremption());
@@ -120,7 +120,7 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean delete(int id) {
         try {
-            PreparedStatement stat = conn.prepareStatement("DELETE FROM PRODUIT WHERE RefProduit=?");
+            PreparedStatement stat = conn.prepareStatement("DELETE FROM PRODUIT WHERE RefProduit=?;");
             stat.setInt(1, id);
             int res = stat.executeUpdate();
             stat.close();

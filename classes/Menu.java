@@ -1,15 +1,10 @@
 import java.sql.Connection;
-import java.awt.ActiveEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.EventHandler;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import org.w3c.dom.Attr;
 
 public class Menu extends JFrame{
     private JButton gestionProduit;
@@ -24,15 +19,21 @@ public class Menu extends JFrame{
     public Menu(Connection conn){
         
         super("Menu");
-        this.setSize(300,300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        
 
         //defining attributes of the data classes
         attRecette = new String[]{"refRecette","nomRecette","tempsPreparation","tempsCuisson","nbPersonnes","difficulte"};
         attComposition = new String[]{"refComposition","refProduit","quantite"};
-
-        pan.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        
+        gestionComposition = new JButton("Gestion Des Compositions");
+        gestionProduit = new JButton("Gestion Des Produits");
+        gestionIngredient= new JButton("Gestion Des Ingredients");
+        gestionTypeIngredient= new JButton("Gestion Des Types D'ingredients");
+        gestionRecette= new JButton("Gestion Des Recettes");
+        gestionRangement= new JButton("Gestion Des Rangements");
+        
+        JPanel pan= new JPanel();
+        pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(gestionComposition);
         pan.add(gestionProduit);
         pan.add(gestionIngredient);
@@ -43,46 +44,50 @@ public class Menu extends JFrame{
         gestionRecette.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==gestionRecette)
-                new AppGestion<Recette>(new RecetteDAO(conn),attRecette);
+                if(e.getSource()==gestionRecette){
+                new AppGestion<Recette>(new RecetteDAO(conn),attRecette);}
             }
         });
         gestionComposition.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==gestionComposition)
-                new AppGestion<Composition>(new CompositionDAO(conn),attComposition);
+                if(e.getSource()==gestionComposition){
+                new AppGestion<Composition>(new CompositionDAO(conn),attComposition);}
             }
         });
         gestionIngredient.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==gestionIngredient)
-                new AppGestion<Ingredient>(new IngredientDAO(conn),attIngredient);
+                if(e.getSource()==gestionIngredient){
+                new AppGestion<Ingredient>(new IngredientDAO(conn),attIngredient);}
             }
         });
         gestionProduit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==gestionProduit)
-                new AppGestion<Produit>(new ProduitDAO(conn),attProduit);
+                if(e.getSource()==gestionProduit){
+                new AppGestion<Produit>(new ProduitDAO(conn),attProduit);}
             }
         });
         gestionTypeIngredient.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==gestionTypeIngredient)
-                new AppGestion<TypeIngredient>(new TypeIngredientDAO(conn),attTypeIngredient);
+                if(e.getSource()==gestionTypeIngredient){
+                new AppGestion<TypeIngredient>(new TypeIngredientDAO(conn),attTypeIngredient);}
             }
         });
         gestionRangement.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==gestionRangement)
-                new AppGestion<Rangement>(new RangementDAO(conn),attRangement);
+                if(gestionRangement==e.getSource()){
+                    new AppGestion<Rangement>(new RangementDAO(conn),attRangement);
+                }
             }
         });
         
+        this.setSize(400,300);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setVisible(true);
         
 
         
@@ -90,7 +95,7 @@ public class Menu extends JFrame{
 
     public static void main(String[] args) {
         DBMSConnection dbConnection=new DBMSConnection();
-        if(dbConnection.getState()==false){
+        if(!dbConnection.getState()){
             return;
         }
         new Menu(dbConnection.getConnection());

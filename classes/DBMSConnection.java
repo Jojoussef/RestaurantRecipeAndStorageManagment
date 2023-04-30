@@ -5,12 +5,12 @@ public class DBMSConnection{
     private static String driver= "oracle.jdbc.driver.OracleDriver";
     private static String user = "c##TPjava";
     private static String password = "system";
-    private static Connection connection;
+    private Connection connection;
     private boolean status;
     public DBMSConnection(){
         try {
             Class.forName(driver);
-        connection = DriverManager.getConnection(url, user, password);
+        this.connection = DriverManager.getConnection(url, user, password);
         status=true;
         }catch(Exception e){
             status=false;
@@ -29,7 +29,7 @@ public class DBMSConnection{
         try{
             connection.close();
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }   
 }

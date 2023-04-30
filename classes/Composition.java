@@ -1,24 +1,24 @@
 public class Composition {
-    private int refComposition;
+    private String refComposition;
     private double quantiteComposition;
-    private int refRecette;
-    private int refIngredient;
+    private String refRecette;
+    private String refIngredient;
     
     public Composition() {
-        }
+    }
         
-    public Composition(int refComposition, double quantiteComposition, int refRecette, int refIngredient) {
+    public Composition(String refComposition, double quantiteComposition, String refRecette, String refIngredient) {
         this.refComposition = refComposition;
         this.quantiteComposition = quantiteComposition;
         this.refRecette = refRecette;
         this.refIngredient = refIngredient;
     }
     
-    public int getRefComposition() {
+    public String getRefComposition() {
         return refComposition;
     }
     
-    public void setRefComposition(int refComposition) {
+    public void setRefComposition(String refComposition) {
         this.refComposition = refComposition;
     }
     
@@ -30,19 +30,19 @@ public class Composition {
         this.quantiteComposition = quantiteComposition;
     }
     
-    public int getRefRecette() {
+    public String getRefRecette() {
         return refRecette;
     }
     
-    public void setRefRecette(int refRecette) {
+    public void setRefRecette(String refRecette) {
         this.refRecette = refRecette;
     }
     
-    public int getRefIngredient() {
+    public String getRefIngredient() {
         return refIngredient;
     }
     
-    public void setRefIngredient(int refIngredient) {
+    public void setRefIngredient(String refIngredient) {
         this.refIngredient = refIngredient;
     }
 }

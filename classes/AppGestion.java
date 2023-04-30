@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 public class AppGestion <T> extends JFrame {
 
     private DAO<T> dao;
-
+    private String[] attributes;
     private JButton createButton;
     private JButton updateButton;
     private JButton deleteButton;
@@ -19,20 +19,21 @@ public class AppGestion <T> extends JFrame {
     private JTextField searchField;
     private JComboBox<String> attributeBox ;
     private JTable table;
-    private JPanel searchPanel,tablePanel,buttonPanel;
+    private JPanel searchPanel,buttonPanel,tablePanel;
+    private JScrollPane tablePane;
     
     public AppGestion(DAO<T> dao, String[] attributes) {
         super( "Gestion du base de donnée");
-        this.setSize(500,400);
-        this.setAutoRequestFocus(rootPaneCheckingEnabled);
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.ABORT);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.dao = dao;
+        this.attributes=attributes;
 
         buttonPanel = new JPanel();
         searchPanel = new JPanel();
         tablePanel = new JPanel();
+        tablePane = new JScrollPane( createTable(dao.findAll()));
 
         add(searchPanel, BorderLayout.NORTH);
         add(tablePanel, BorderLayout.CENTER);
@@ -55,47 +56,50 @@ public class AppGestion <T> extends JFrame {
         searchPanel.add(attributeBox);
         searchPanel.add(searchButton);
 
-
-        table = createTable(dao.findAll());
-        tablePanel.add(table);
-
+        tablePanel.add(tablePane);
+        
+        pack();
     }
     
     /*Creates a JTable with the given data (ArrayList) and it's stolen */
     public JTable createTable(ArrayList<T> list) {
-        // Create a vector to store the column names
-        Vector<String> columnNames = new Vector<String>();
+        if(list.isEmpty()){
+            return null;
+        }
+        // Create an array to store the column names
+        String[] columnNames = new String[list.get(0).getClass().getDeclaredFields().length];
 
-        // Get the fields of the generic type T and add their names to the columnNames vector
+        // Get the fields of the generic type T and add their names to the columnNames array
         Field[] fields = list.get(0).getClass().getDeclaredFields();
-        for (Field field : fields) {
-            columnNames.add(field.getName());
+        for (int i = 0; i < fields.length; i++) {
+            columnNames[i] = fields[i].getName();
         }
 
-        // Create a vector to store the data
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        // Create a 2D array to store the data
+        Object[][] data = new Object[list.size()][columnNames.length];
 
-        // Loop through the list and add each object's field values to a new vector
-        for (T object : list) {
-            Vector<Object> row = new Vector<Object>();
-            for (Field field : fields) {
+        // Loop through the list and add each object's field values to a new row in the data array
+        for (int i = 0; i < list.size(); i++) {
+            T object = list.get(i);
+            for (int j = 0; j < columnNames.length; j++) {
                 try {
+                    Field field = fields[j];
                     field.setAccessible(true);
                     Object value = field.get(object);
-                    row.add(value);
+                    data[i][j] = value;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
-            data.add(row);
         }
 
-        // Create a new DefaultTableModel with the columnNames and data vectors
+        // Create a new DefaultTableModel with the columnNames and data arrays
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
         // Create a new JTable with the DefaultTableModel and return it
         return new JTable(model);
     }
+
 }
 
            

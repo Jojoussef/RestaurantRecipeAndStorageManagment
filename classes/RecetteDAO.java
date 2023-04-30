@@ -13,7 +13,7 @@ public class RecetteDAO extends DAO<Recette>{
     @Override
     public ArrayList<Recette> findAll() {
         try{
-            PreparedStatement stat= conn.prepareStatement("SELECT * FROM RECETTE");
+            PreparedStatement stat= conn.prepareStatement("SELECT * FROM RECETTE;");
             ResultSet res = stat.executeQuery();
             ArrayList<Recette> recettes = new ArrayList<Recette>();
             while(res.next()){
@@ -30,7 +30,7 @@ public class RecetteDAO extends DAO<Recette>{
     @Override
     public ArrayList<Recette> findAll(String champ, String nomChamp) {
         try{
-            PreparedStatement stat= conn.prepareStatement("SELECT * FROM RECETTE WHERE "+nomChamp+champ);
+            PreparedStatement stat= conn.prepareStatement("SELECT * FROM RECETTE WHERE "+nomChamp+champ+";");
             ResultSet res = stat.executeQuery();
             ArrayList<Recette> recettes = new ArrayList<Recette>();
             while(res.next()){
@@ -50,7 +50,7 @@ public class RecetteDAO extends DAO<Recette>{
         PreparedStatement stat;
         try{
             
-            stat = conn.prepareStatement("SELECT * FROM RECETTE WHERE refRecette=?");
+            stat = conn.prepareStatement("SELECT * FROM RECETTE WHERE refRecette=?;");
             stat.setInt(1, id);
             ResultSet res = stat.executeQuery();
             if(res.next()){
@@ -68,7 +68,7 @@ public class RecetteDAO extends DAO<Recette>{
     @Override
     public boolean create(Recette o) {
         try{
-            PreparedStatement stat = conn.prepareStatement("INSERT INTO RECETTE VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement stat = conn.prepareStatement("INSERT INTO RECETTE VALUES(?,?,?,?,?,?,?);");
             stat.setInt(1, o.getRefRecette());
             stat.setString(2, o.getNomRecette());
             stat.setString(3, o.getDescriptifRecette());
@@ -89,7 +89,7 @@ public class RecetteDAO extends DAO<Recette>{
     @Override
     public boolean update(Recette o) {
         try{
-            PreparedStatement stat= conn.prepareStatement("UPDATE RECETTE SET nomRecette=?, descriptionRecette=?, calorieRecette=?, difficulte=?, tempsPreparation=?, tempsCuisson=?, nbPersonnes=? WHERE refRecette=?");
+            PreparedStatement stat= conn.prepareStatement("UPDATE RECETTE SET nomRecette=?, descriptionRecette=?, calorieRecette=?, difficulte=?, tempsPreparation=?, tempsCuisson=?, nbPersonnes=? WHERE refRecette=?;");
             stat.setString(2, o.getNomRecette());
             stat.setString(3, o.getDescriptifRecette());
             stat.setInt(4, o.getCalorieRecette());

@@ -13,7 +13,7 @@ public class RangementDAO extends DAO<Rangement> {
             if (find(rangement.getRefRangement()) != null) {
                 return false;
             }
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO rangement (refRangement, nomRangement) VALUES (?, ?)");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO rangement (refRangement, nomRangement) VALUES (?, ?);");
             statement.setInt(1, rangement.getRefRangement());
             statement.setString(2, rangement.getNomRangement());
             statement.executeUpdate();
@@ -27,7 +27,7 @@ public class RangementDAO extends DAO<Rangement> {
     @Override
     public boolean delete(int id)  {
         try{
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM rangement WHERE refRangement = ?");
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM rangement WHERE refRangement = ?;");
             statement.setInt(1, id);
             statement.executeUpdate();
         }catch(SQLException e){ e.printStackTrace();
@@ -42,7 +42,7 @@ public class RangementDAO extends DAO<Rangement> {
             if (find(rangement.getRefRangement()) == null) {
                 return false;
             }
-            PreparedStatement statement = conn.prepareStatement("UPDATE rangement SET nomRangement = ? WHERE refRangement = ?");
+            PreparedStatement statement = conn.prepareStatement("UPDATE rangement SET nomRangement = ? WHERE refRangement = ?;");
             statement.setString(1, rangement.getNomRangement());
             statement.setInt(2, rangement.getRefRangement());
             statement.executeUpdate();
@@ -57,7 +57,7 @@ public class RangementDAO extends DAO<Rangement> {
     public ArrayList<Rangement> findAll()  {
         try{
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement;");
             ArrayList<Rangement> rangements = new ArrayList<>();
             while (resultSet.next()) {
                 Rangement rangement = new Rangement(resultSet.getInt("refRangement"),resultSet.getString("nomRangement"));
@@ -73,7 +73,7 @@ public class RangementDAO extends DAO<Rangement> {
     public ArrayList<Rangement> findAll(String champ, String nomChamp)  {
         try{
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement"+nomChamp+champ);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement"+nomChamp+champ+";");
             ArrayList<Rangement> rangements = new ArrayList<>();
             while (resultSet.next()) {
                 Rangement rangement = new Rangement(resultSet.getInt("refRangement"),resultSet.getString("nomRangement"));
@@ -88,7 +88,7 @@ public class RangementDAO extends DAO<Rangement> {
     @Override
     public Rangement find(int id) {
         try{
-        PreparedStatement statement = conn.prepareStatement("SELECT * FROM rangement WHERE refRangement = ?");
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM rangement WHERE refRangement = ?;");
         statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
         Rangement rangement = null;

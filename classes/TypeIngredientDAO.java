@@ -15,7 +15,7 @@ public class TypeIngredientDAO extends DAO<TypeIngredient> {
     public ArrayList<TypeIngredient> findAll() {
         ArrayList<TypeIngredient> typeIngredients = new ArrayList<>();
         try {
-            PreparedStatement prepare = conn.prepareStatement("SELECT * FROM typeingredient");
+            PreparedStatement prepare = conn.prepareStatement("SELECT * FROM typeingredient;");
             ResultSet  result = prepare.executeQuery();
             while(result.next()){
                 typeIngredients.add(new TypeIngredient(result.getInt("RefType"), result.getString("nomType")));
@@ -32,7 +32,7 @@ public class TypeIngredientDAO extends DAO<TypeIngredient> {
     public ArrayList<TypeIngredient> findAll(String valChamp, String nomChamp) {
         ArrayList<TypeIngredient> typeIngredients = new ArrayList<>();
         try {
-            PreparedStatement prepare = conn.prepareStatement("SELECT * FROM typeingredient WHERE "+nomChamp+valChamp);
+            PreparedStatement prepare = conn.prepareStatement("SELECT * FROM typeingredient WHERE "+nomChamp+valChamp+";");
             prepare.setString(1, nomChamp);
             ResultSet  result = prepare.executeQuery();
             while(result.next()){
@@ -48,7 +48,7 @@ public class TypeIngredientDAO extends DAO<TypeIngredient> {
     @Override
     public TypeIngredient find(int id) {
         try {
-            PreparedStatement prepare = conn.prepareStatement("SELECT * FROM typeingredient WHERE RefType = ?");
+            PreparedStatement prepare = conn.prepareStatement("SELECT * FROM typeingredient WHERE RefType = ?;");
             prepare.setInt(1, id);
             ResultSet  result = prepare.executeQuery();
             if(result.next()){
@@ -67,7 +67,7 @@ public class TypeIngredientDAO extends DAO<TypeIngredient> {
     @Override
     public boolean create(TypeIngredient o) {
         try {
-            PreparedStatement prepare = conn.prepareStatement("INSERT INTO typeingredient(RefType, nomType) VALUES(?,?)");
+            PreparedStatement prepare = conn.prepareStatement("INSERT INTO typeingredient(RefType, nomType) VALUES(?,?);");
             prepare.setInt(1, o.getRefType());
             prepare.setString(2, o.getNomType());
             prepare.executeUpdate();
@@ -83,7 +83,7 @@ public class TypeIngredientDAO extends DAO<TypeIngredient> {
     @Override
     public boolean update(TypeIngredient o) {
         try {
-            PreparedStatement prepare = conn.prepareStatement("UPDATE typeingredient SET nomType = ? WHERE RefType = ?");
+            PreparedStatement prepare = conn.prepareStatement("UPDATE typeingredient SET nomType = ? WHERE RefType = ?;");
             prepare.setString(1, o.getNomType());
             prepare.setInt(2, o.getRefType());
             prepare.executeUpdate();
@@ -97,7 +97,7 @@ public class TypeIngredientDAO extends DAO<TypeIngredient> {
     @Override
     public boolean delete(int id) {
         try {
-            PreparedStatement prepare = conn.prepareStatement("DELETE FROM typeingredient WHERE RefType = ?");
+            PreparedStatement prepare = conn.prepareStatement("DELETE FROM typeingredient WHERE RefType = ?;");
             prepare.setInt(1, id);
             prepare.executeUpdate();
             return true;

@@ -35,7 +35,7 @@ public class IngredientDAO extends DAO<Ingredient> {
     
     public boolean update(Ingredient ingredient) {
         try{
-            String query = "UPDATE ingredients SET nom_ingredient = ?, ref_type = ? WHERE ref_ingredient = ?";
+            String query = "UPDATE ingredients SET nom_ingredient = ?, ref_type = ? WHERE ref_ingredient = ?;";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, ingredient.getNomIngredient());
             stmt.setInt(2, ingredient.getRefType());
@@ -50,10 +50,10 @@ public class IngredientDAO extends DAO<Ingredient> {
         return false;
     }
     
-    public boolean delete(int refIngredient)  {
+    public boolean delete(String refIngredient)  {
         try{
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM ingredients WHERE ref_ingredient = ?");
-        stmt.setInt(1, refIngredient);
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM ingredients WHERE ref_ingredient = ?;");
+        stmt.setString(1, refIngredient);
         stmt.executeUpdate();
         stmt.close();
         return true;
@@ -72,7 +72,7 @@ public class IngredientDAO extends DAO<Ingredient> {
         
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT");
+            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT;");
             while (res.next()) {                
                 ing.setNomIngredient(res.getString("NomIngredient"));
                 ing.setRefType(Integer.parseInt(res.getString("QuantiteProduit")));
@@ -95,7 +95,7 @@ public class IngredientDAO extends DAO<Ingredient> {
         
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT"+nomChamp+champ);
+            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT"+nomChamp+champ+";");
             while (res.next()) {                
                 ing.setNomIngredient(res.getString("NomIngredient"));
                 ing.setRefType(Integer.parseInt(res.getString("QuantiteProduit")));
@@ -115,7 +115,7 @@ public class IngredientDAO extends DAO<Ingredient> {
         Ingredient ing= new Ingredient();
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT WHERE RefIngredient= ?");            
+            ResultSet res= stat.executeQuery("SELECT * FROM INGREDIENT WHERE RefIngredient= ?;");            
                 ing.setNomIngredient(res.getString("NomIngredient"));
                 ing.setRefType(res.getInt("QuantiteProduit"));
                 ing.setRefIngredient(id);
