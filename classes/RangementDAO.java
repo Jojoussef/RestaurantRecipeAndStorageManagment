@@ -14,7 +14,7 @@ public class RangementDAO extends DAO<Rangement> {
                 return false;
             }
             PreparedStatement statement = conn.prepareStatement("INSERT INTO rangement (refRangement, nomRangement) VALUES (?, ?);");
-            statement.setInt(1, rangement.getRefRangement());
+            statement.setString(1, rangement.getRefRangement());
             statement.setString(2, rangement.getNomRangement());
             statement.executeUpdate();
         }catch(SQLException e){
@@ -25,10 +25,10 @@ public class RangementDAO extends DAO<Rangement> {
     }
 
     @Override
-    public boolean delete(int id)  {
+    public boolean delete(String id)  {
         try{
             PreparedStatement statement = conn.prepareStatement("DELETE FROM rangement WHERE refRangement = ?;");
-            statement.setInt(1, id);
+            statement.setString(1, id);
             statement.executeUpdate();
         }catch(SQLException e){ e.printStackTrace();
             return false;
@@ -44,7 +44,7 @@ public class RangementDAO extends DAO<Rangement> {
             }
             PreparedStatement statement = conn.prepareStatement("UPDATE rangement SET nomRangement = ? WHERE refRangement = ?;");
             statement.setString(1, rangement.getNomRangement());
-            statement.setInt(2, rangement.getRefRangement());
+            statement.setString(2, rangement.getRefRangement());
             statement.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class RangementDAO extends DAO<Rangement> {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement;");
             ArrayList<Rangement> rangements = new ArrayList<>();
             while (resultSet.next()) {
-                Rangement rangement = new Rangement(resultSet.getInt("refRangement"),resultSet.getString("nomRangement"));
+                Rangement rangement = new Rangement(resultSet.getString("refRangement"),resultSet.getString("nomRangement"));
                 rangements.add(rangement);
             }
             return rangements;
@@ -76,7 +76,7 @@ public class RangementDAO extends DAO<Rangement> {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM rangement"+nomChamp+champ+";");
             ArrayList<Rangement> rangements = new ArrayList<>();
             while (resultSet.next()) {
-                Rangement rangement = new Rangement(resultSet.getInt("refRangement"),resultSet.getString("nomRangement"));
+                Rangement rangement = new Rangement(resultSet.getString("refRangement"),resultSet.getString("nomRangement"));
                 rangements.add(rangement);
             }
             return rangements;
@@ -86,14 +86,14 @@ public class RangementDAO extends DAO<Rangement> {
     }
 
     @Override
-    public Rangement find(int id) {
+    public Rangement find(String id) {
         try{
         PreparedStatement statement = conn.prepareStatement("SELECT * FROM rangement WHERE refRangement = ?;");
-        statement.setInt(1, id);
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
         Rangement rangement = null;
         if (resultSet.next()) {
-            rangement = new Rangement(resultSet.getInt("refRangement"),resultSet.getString("nomRangement"));
+            rangement = new Rangement(resultSet.getString("refRangement"),resultSet.getString("nomRangement"));
         }
         return rangement;
         }catch(SQLException e){ e.printStackTrace();

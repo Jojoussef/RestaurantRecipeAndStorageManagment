@@ -1,7 +1,5 @@
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Vector;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
@@ -18,7 +16,6 @@ public class AppGestion <T> extends JFrame {
     private JButton searchButton;
     private JTextField searchField;
     private JComboBox<String> attributeBox ;
-    private JTable table;
     private JPanel searchPanel,buttonPanel,tablePanel;
     private JScrollPane tablePane;
     

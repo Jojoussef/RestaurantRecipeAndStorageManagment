@@ -14,20 +14,20 @@ public class ProduitDAO extends DAO<Produit> {
         
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT;");
+            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT");
             while (res.next()) {                
                 prod.setDatePeremption(res.getString("DatePeremption"));
                 prod.setDescriptifProduit(res.getString("DescriptifProduit"));
-                prod.setPrixProduit(Integer.parseInt(res.getString("PrixProduit")));
-                prod.setQuantiteProduit(Integer.parseInt(res.getString("QuantiteProduit")));
-                prod.setRefIngredient(Integer.parseInt(res.getString("RefIngredient")));
-                prod.setRefProduit(Integer.parseInt(res.getString("RefProduit")));
-                prod.setRefReangement(Integer.parseInt(res.getString("RefReangement")));
+                prod.setPrixProduit(res.getDouble("PrixProduit"));
+                prod.setQuantiteProduit(res.getInt("QuantiteProduit"));
+                prod.setRefIngredient(res.getString("RefIngredient"));
+                prod.setRefProduit(res.getString("RefProduit"));
+                prod.setRefReangement(res.getString("RefReangement"));
                 arrProduit.add(prod);
             }
             stat.close();
         } catch (NumberFormatException | SQLException e) {
-            Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
         }
         return arrProduit;
     }
@@ -39,58 +39,59 @@ public class ProduitDAO extends DAO<Produit> {
         
         try {
             Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT"+nomChamp+champ+";");
+            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT"+nomChamp+champ);
             while (res.next()) {                
                 prod.setDatePeremption(res.getString("DatePeremption"));
                 prod.setDescriptifProduit(res.getString("DescriptifProduit"));
-                prod.setPrixProduit(Integer.parseInt(res.getString("PrixProduit")));
-                prod.setQuantiteProduit(Integer.parseInt(res.getString("QuantiteProduit")));
-                prod.setRefIngredient(Integer.parseInt(res.getString("RefIngredient")));
-                prod.setRefProduit(Integer.parseInt(res.getString("RefProduit")));
-                prod.setRefReangement(Integer.parseInt(res.getString("RefReangement")));
+                prod.setPrixProduit(res.getDouble("PrixProduit"));
+                prod.setQuantiteProduit(res.getInt("QuantiteProduit"));
+                prod.setRefIngredient(res.getString("RefIngredient"));
+                prod.setRefProduit(res.getString("RefProduit"));
+                prod.setRefReangement(res.getString("RefReangement"));
                 arrProduit.add(prod);
             }
             stat.close();
-        } catch (NumberFormatException | SQLException e) {
-            Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, e);
+        } catch (NumberFormatException | SQLException ex) {
+            ex.printStackTrace();
         }
         return arrProduit;
     }
 
-    public Produit find(int id){
+    public Produit find(String id){
         Produit prod= new Produit();
         try {
-            Statement stat= conn.createStatement();
-            ResultSet res= stat.executeQuery("SELECT * FROM PRODUIT;");            
+            PreparedStatement stat= conn.prepareStatement("SELECT * FROM PRODUIT WHERE RefProduit = ?");
+            stat.setString(1, id);
+            ResultSet res= stat.executeQuery();            
                 prod.setDatePeremption(res.getString("DatePeremption"));
                 prod.setDescriptifProduit(res.getString("DescriptifProduit"));
-                prod.setPrixProduit(Integer.parseInt(res.getString("PrixProduit")));
-                prod.setQuantiteProduit(Integer.parseInt(res.getString("QuantiteProduit")));
-                prod.setRefIngredient(Integer.parseInt(res.getString("RefIngredient")));
-                prod.setRefProduit(Integer.parseInt(res.getString("RefProduit")));
-                prod.setRefReangement(Integer.parseInt(res.getString("RefReangement")));
+                prod.setPrixProduit(res.getDouble("PrixProduit"));
+                prod.setQuantiteProduit(res.getInt("QuantiteProduit"));
+                prod.setRefIngredient(res.getString("RefIngredient"));
+                prod.setRefProduit(id);
+                prod.setRefReangement(res.getString("RefReangement"));
                 
         
-        }catch (Exception e) {
-            Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, e);
+        }catch (Exception ex) {
+            ex.printStackTrace();
         }
         return prod;
     }
     @Override
     public boolean create(Produit o){
         try {
-            PreparedStatement stat = this.conn.prepareStatement("INSERT INTO Produit (RefProduit, DescriptifProduit, DatePeremption, QuantiteProduit, PrixProduit, RefReangement, RefIngredient) VALUES (?, ?, ?, ?, ?, ?, ?);");
-            stat.setInt(1, o.getRefProduit());
+            PreparedStatement stat = this.conn.prepareStatement("INSERT INTO Produit (RefProduit, DescriptifProduit, DatePeremption, QuantiteProduit, PrixProduit, RefReangement, RefIngredient) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            stat.setString(1, o.getRefProduit());
             stat.setString(2, o.getDescriptifProduit());
             stat.setString(3, o.getDatePeremption());
             stat.setInt(4, o.getQuantiteProduit());
             stat.setDouble(5, o.getPrixProduit());
-            stat.setInt(6, o.getRefReangement());
-            stat.setInt(7, o.getRefIngredient());
+            stat.setString(6, o.getRefReangement());
+            stat.setString(7, o.getRefIngredient());
             int res = stat.executeUpdate();
             return res==1;
         } catch (SQLException ex) {
-            Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, ex); //auto-generated by Netbeans
+            ex.printStackTrace();
         }
         return false;
     }
@@ -100,15 +101,15 @@ public class ProduitDAO extends DAO<Produit> {
     public boolean update(Produit o) {
          try {
             PreparedStatement stat = this.conn.prepareStatement(
-                "UPDATE Produit SET DescriptifProduit = ?, DatePeremption = ?, QuantiteProduit = ?, PrixProduit = ?, RefReangement = ?, RefIngredient = ? WHERE RefProduit = ?;"
+                "UPDATE Produit SET DescriptifProduit = ?, DatePeremption = ?, QuantiteProduit = ?, PrixProduit = ?, RefReangement = ?, RefIngredient = ? WHERE RefProduit = ?"
             );
             stat.setString(1, o.getDescriptifProduit());
             stat.setString(2, o.getDatePeremption());
             stat.setInt(3, o.getQuantiteProduit());
             stat.setDouble(4, o.getPrixProduit());
-            stat.setInt(5, o.getRefReangement());
-            stat.setInt(6, o.getRefIngredient());
-            stat.setInt(7, o.getRefProduit());
+            stat.setString(5, o.getRefReangement());
+            stat.setString(6, o.getRefIngredient());
+            stat.setString(7, o.getRefProduit());
             int res = stat.executeUpdate();
             return res == 1;
         } catch (SQLException e) {
@@ -118,15 +119,15 @@ public class ProduitDAO extends DAO<Produit> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String id) {
         try {
-            PreparedStatement stat = conn.prepareStatement("DELETE FROM PRODUIT WHERE RefProduit=?;");
-            stat.setInt(1, id);
+            PreparedStatement stat = conn.prepareStatement("DELETE FROM PRODUIT WHERE RefProduit=?");
+            stat.setString(1, id);
             int res = stat.executeUpdate();
             stat.close();
             return res==1;
         } catch (SQLException ex) {
-            Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return false;
     }

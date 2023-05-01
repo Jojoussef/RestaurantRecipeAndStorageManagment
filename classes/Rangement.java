@@ -1,8 +1,8 @@
 public class Rangement {
-    private int refRangement;
+    private String refRangement;
     private String nomRangement;
     
-    public Rangement(int refRangement, String nomRangement) {
+    public Rangement(String refRangement, String nomRangement) {
         this.refRangement = refRangement;
         this.nomRangement = nomRangement;
     }
@@ -12,11 +12,11 @@ public class Rangement {
     }
     
     
-    public int getRefRangement() {
+    public String getRefRangement() {
         return refRangement;
     }
     
-    public void setRefRangement(int refRangement) {
+    public void setRefRangement(String refRangement) {
         this.refRangement = refRangement;
     }
     

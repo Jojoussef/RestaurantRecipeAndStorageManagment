@@ -1,9 +1,9 @@
 public class Ingredient {
-    private int refIngredient;
+    private String refIngredient;
     private String nomIngredient;
-    private int refType;
+    private String refType;
     
-    public Ingredient(int refIngredient, String nomIngredient, int refType) {
+    public Ingredient(String refIngredient, String nomIngredient, String refType) {
         this.refIngredient = refIngredient;
         this.nomIngredient = nomIngredient;
         this.refType = refType;
@@ -13,11 +13,11 @@ public class Ingredient {
         
     }
     
-    public int getRefIngredient() {
+    public String getRefIngredient() {
         return refIngredient;
     }
     
-    public void setRefIngredient(int refIngredient) {
+    public void setRefIngredient(String refIngredient) {
         this.refIngredient = refIngredient;
     }
     
@@ -29,11 +29,11 @@ public class Ingredient {
         this.nomIngredient = nomIngredient;
     }
     
-    public int getRefType() {
+    public String getRefType() {
         return refType;
     }
     
-    public void setRefType(int refType) {
+    public void setRefType(String refType) {
         this.refType = refType;
     }
 }

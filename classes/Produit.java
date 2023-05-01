@@ -1,12 +1,12 @@
 class Produit{
-    private int RefProduit;
+    private String RefProduit;
     private String DescriptifProduit;
     private String DatePeremption;
     private int QuantiteProduit;
-    private int PrixProduit;
-    private int RefReangement;
-    private int RefIngredient;
-    public Produit(int RefProduit, String DescriptifProduit, String DatePeremption, int QuantiteProduit, int PrixProduit, int RefReangement, int RefIngredient){
+    private double PrixProduit;
+    private String RefReangement;
+    private String RefIngredient;
+    public Produit(String RefProduit, String DescriptifProduit, String DatePeremption, int QuantiteProduit, double PrixProduit, String RefReangement, String RefIngredient){
         this.RefProduit = RefProduit;
         this.DescriptifProduit = DescriptifProduit;
         this.DatePeremption = DatePeremption;
@@ -16,18 +16,18 @@ class Produit{
         this.RefIngredient = RefIngredient;
     }
     public Produit(){
-        this.RefProduit = 0;
+        this.RefProduit = null;;
         this.DescriptifProduit = null;
         this.DatePeremption = null;
         this.QuantiteProduit = 0;
         this.PrixProduit = 0;
-        this.RefReangement = 0;
-        this.RefIngredient = 0;
+        this.RefReangement = null;
+        this.RefIngredient = null;
     }
-    public int getRefProduit(){
+    public String getRefProduit(){
         return RefProduit;
     }
-    public void setRefProduit(int RefProduit){
+    public void setRefProduit(String RefProduit){
         this.RefProduit = RefProduit;
     }
     public String getDescriptifProduit(){
@@ -48,22 +48,22 @@ class Produit{
     public void setQuantiteProduit(int QuantiteProduit){
         this.QuantiteProduit = QuantiteProduit;
     }
-    public int getPrixProduit(){
+    public double getPrixProduit(){
         return PrixProduit;
     }
-    public void setPrixProduit(int PrixProduit){
+    public void setPrixProduit(double PrixProduit){
         this.PrixProduit = PrixProduit;
     }
-    public int getRefReangement(){
+    public String getRefReangement(){
         return RefReangement;
     }
-    public void setRefReangement(int RefReangement){
+    public void setRefReangement(String RefReangement){
         this.RefReangement = RefReangement;
     }
-    public int getRefIngredient(){
+    public String getRefIngredient(){
         return RefIngredient;
     }
-    public void setRefIngredient(int RefIngredient){
+    public void setRefIngredient(String RefIngredient){
         this.RefIngredient = RefIngredient;
     }
 }

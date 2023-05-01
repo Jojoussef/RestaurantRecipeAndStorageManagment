@@ -1,14 +1,14 @@
 public class Recette {
-    private int refRecette;
+    private String refRecette;
     private String nomRecette;
     private String descriptifRecette;
     private int calorieRecette;
-    private int difficulte;
+    private String difficulte;
     private int tempsPreparation;
     private int tempsCuisson;
     private int nbPersonnes;
     
-    public Recette(int refRecette, String nomRecette, String descriptifRecette, int calorieRecette, int difficulte, int tempsPreparation, int tempsCuisson, int nbPersonnes) {
+    public Recette(String refRecette, String nomRecette, String descriptifRecette, int calorieRecette, String difficulte, int tempsPreparation, int tempsCuisson, int nbPersonnes) {
         this.refRecette = refRecette;
         this.nomRecette = nomRecette;
         this.descriptifRecette = descriptifRecette;
@@ -19,11 +19,11 @@ public class Recette {
         this.nbPersonnes = nbPersonnes;
     }
 
-    public int getRefRecette() {
+    public String getRefRecette() {
         return refRecette;
     }
     
-    public void setRefRecette(int refRecette) {
+    public void setRefRecette(String refRecette) {
         this.refRecette = refRecette;
     }
     
@@ -51,11 +51,11 @@ public class Recette {
         this.calorieRecette = calorieRecette;
     }
     
-    public int getDifficulte() {
+    public String getDifficulte() {
         return difficulte;
     }
     
-    public void setDifficulte(int difficulte) {
+    public void setDifficulte(String difficulte) {
         this.difficulte = difficulte;
     }
     

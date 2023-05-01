@@ -1,8 +1,8 @@
 public class TypeIngredient {
-    private int refType;
+    private String refType;
     private String nomType;
     
-    public TypeIngredient(int refType, String nomType) {
+    public TypeIngredient(String refType, String nomType) {
         this.refType = refType;
         this.nomType = nomType;
     }
@@ -12,11 +12,11 @@ public class TypeIngredient {
     }
 
     
-    public int getRefType() {
+    public String getRefType() {
         return refType;
     }
     
-    public void setRefType(int refType) {
+    public void setRefType(String refType) {
         this.refType = refType;
     }
     
