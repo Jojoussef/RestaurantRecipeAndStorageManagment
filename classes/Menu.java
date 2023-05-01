@@ -25,6 +25,7 @@ public class Menu extends JFrame{
         attRecette = new String[]{"refRecette","nomRecette","tempsPreparation","tempsCuisson","nbPersonnes","difficulte"};
         attComposition = new String[]{"refComposition","refProduit","quantite"};
         
+        
         gestionComposition = new JButton("Gestion Des Compositions");
         gestionProduit = new JButton("Gestion Des Produits");
         gestionIngredient= new JButton("Gestion Des Ingredients");
@@ -32,7 +33,7 @@ public class Menu extends JFrame{
         gestionRecette= new JButton("Gestion Des Recettes");
         gestionRangement= new JButton("Gestion Des Rangements");
         
-        JPanel pan= new JPanel();
+        pan= new JPanel();
         pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
         pan.add(gestionComposition);
         pan.add(gestionProduit);

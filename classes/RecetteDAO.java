@@ -17,8 +17,15 @@ public class RecetteDAO extends DAO<Recette>{
             ResultSet res = stat.executeQuery();
             ArrayList<Recette> recettes = new ArrayList<Recette>();
             while(res.next()){
-                Recette recette = new Recette(res.getString("refRecette"), res.getString("nomRecette"), res.getString("descriptionRecette"), res.getInt("calorieRecette"),res.getString("difficulte"),res.getInt("tempsPreparation"),
-                 res.getInt("tempsCuisson"), res.getInt("nbPersonnes"));
+                Recette recette = new Recette();
+                recette.setTempsCuisson(res.getInt("tempsCuisson"));
+                recette.setCalorieRecette(res.getInt("calorieRecette"));
+                recette.setNomRecette(res.getString("nomRecette"));
+                recette.setDescriptifRecette(res.getString("descriptifRecette"));
+                recette.setDifficulte(res.getString("difficulte"));
+                recette.setRefRecette(res.getString("refRecette"));
+                recette.setNbPersonnes(res.getInt("nbPersonnes"));
+                recette.setTempsPreparation(res.getInt("tempsPreparation"));
                 recettes.add(recette);
                 return recettes;
             }

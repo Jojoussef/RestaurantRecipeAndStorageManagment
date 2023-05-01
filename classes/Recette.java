@@ -18,6 +18,17 @@ public class Recette {
         this.tempsCuisson = tempsCuisson;
         this.nbPersonnes = nbPersonnes;
     }
+    
+    public Recette(){
+        this.refRecette = null;
+        this.nomRecette = null;
+        this.descriptifRecette = null;
+        this.calorieRecette = 0;
+        this.difficulte = null;
+        this.tempsPreparation = 0;
+        this.tempsCuisson = 0;
+        this.nbPersonnes = 0;
+    }
 
     public String getRefRecette() {
         return refRecette;

@@ -30,7 +30,6 @@ public class AppGestion <T> extends JFrame {
         buttonPanel = new JPanel();
         searchPanel = new JPanel();
         tablePanel = new JPanel();
-        tablePane = new JScrollPane( createTable(dao.findAll()));
 
         add(searchPanel, BorderLayout.NORTH);
         add(tablePanel, BorderLayout.CENTER);
@@ -52,6 +51,8 @@ public class AppGestion <T> extends JFrame {
         searchPanel.add(searchField );
         searchPanel.add(attributeBox);
         searchPanel.add(searchButton);
+        tablePane = new JScrollPane( createTable(dao.findAll()));
+
 
         tablePanel.add(tablePane);
         
